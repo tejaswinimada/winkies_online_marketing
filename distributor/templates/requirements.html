@@ -1,0 +1,87 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title> requirements</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-image:url('/static/images/image7.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            height: 47vh;
+        }
+        
+        .container {
+            max-width: 400px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        label {
+            margin-bottom: 5px;
+        }
+        
+        input[type="text"],
+        input[type="tel"],
+        input[type="integer"],
+        button {
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        
+        button {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+        
+        button:hover {
+            background-color: #0056b3;
+        }
+        
+    </style>
+</head>
+<body>
+    <div class="container">
+    <h1>YOUR REQUIREMENTS</h1>
+    {% if messages  %}
+    <ul>
+    {% for message in messages%}
+    <li> {{message}} </li>
+    {% endfor %}
+    </ul>
+    {% endif%}
+
+    <form method="post">
+        {% csrf_token %}
+        <label for="Item_name"> Item_Name:</label><br>
+        <input type="text" id="tem_Name" name="item_name"><br>
+        <label for="quantity">Quantity:</label><br>
+        <input type="tel" id="quantity" name="quantity"><br>
+        <label for="price">Price:</label><br>
+        <input type="integer" id="price" name="price" ><br><br>
+        <input type="submit" value=" Add Orders ">
+    </form>
+</div>
+</body>
+</html>

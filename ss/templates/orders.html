@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Your Orders</title>
+    <style>
+        body {
+            font-family: Georgia, serif;
+            margin: 0;
+            padding: 0;
+            background-image: url('/static/images/image4.jpg');
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .container {
+            max-width: 637px;
+            margin: 12px auto;
+            padding: 47px;
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 5px;
+        }
+        
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+        
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        
+        li {
+            background-color: #fff;
+            padding: 10px;
+            margin-bottom: 5px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        label {
+            font-weight: bold;
+        }
+        
+        input[type="text"],
+        input[type="tel"],
+        input[type="number"] {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        
+        input[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Orders List</h1>
+        {% if messages %}
+        <ul>
+        {% for message in messages %}
+        <li>{{ message }}</li>
+        {% endfor %}
+        </ul>
+        {% endif %}
+    
+        <form method="post">
+            {% csrf_token %}
+            <label for="Item_name">Item Name:</label><br>
+            <input type="text" id="item_name" name="item_name"><br>
+            <label for="quantity">Quantity:</label><br>
+            <input type="tel" id="quantity" name="quantity"><br>
+            <label for="price">Price:</label><br>
+            <input type="number" id="price" name="price"><br><br>
+            <input type="submit" value="Add Order">
+        </form>
+    </div>
+</body>
+</html>

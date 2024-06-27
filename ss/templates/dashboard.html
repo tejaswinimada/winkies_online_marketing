@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-image:url('/static/images/image4.jpg');
+            background-size: cover;
+            background-position: center;
+           
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        header {
+            text-align: center;
+            padding: 10px 0;
+            background-color: #333;
+            color: white;
+            border-radius: 5px 5px 0 0;
+        }
+        
+        h1 {
+            margin-top: 0;
+        }
+        
+        nav a {
+            text-decoration: none;
+            color: white;
+            margin-right: 20px;
+        }
+        
+        nav a:hover {
+            text-decoration: underline;
+        }
+        
+        .sidenav {
+            float: left;
+            width: 30%;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .sidenav button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: none;
+            background-color: #4CAF50;
+            color: white;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        
+        .sidenav button:hover {
+            background-color: #45a049;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        
+        table th, table td {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        table th {
+            background-color: #f4f4f4;
+            font-weight: bold;
+            text-align: left;
+        }
+        
+        table tbody tr:hover {
+            background-color: #f9f9f9;
+        }
+        {% comment %} .logo {
+            position: absolute;
+            top: 97px;
+            right: -2px;
+            z-index: 999;
+            /* Ensure the logo appears above other content */
+        }
+        
+        .logo img {
+            width: 300px; /* Adjust the width of the logo as needed */
+            height: auto; /* Maintain aspect ratio */
+        } {% endcomment %}
+    
+        a.logout-link {
+            display: inline-block;
+            padding: 10px 20px;
+            margin: 10px;
+            text-decoration: none;
+            color: white;
+            background-color: #d9534f; /* Red background color */
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+        
+        a.logout-link:hover {
+            background-color: #c9302c; /* Darker red on hover */
+        }
+        
+        a.logout-link:active {
+            background-color: #ac2925; /* Even darker red when clicked */
+        }
+         
+        
+       
+    </style>
+</head>
+
+<body>
+    {% if messages %}
+    <ul>
+        {% for message in messages %}
+        <li>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    <header>
+        <h1>SRI MAHALAKSHMI MARKETING</h1>
+        
+        <a href='/logout/'  class='logout-link'>logout</a>
+    </header>
+
+    <h1>Dashboard</h1>
+   
+
+    <!-- Button to toggle availability -->
+    <button id="availability-button">Availability</button>
+
+    <!-- Available Items section (initially hidden) -->
+    <div id="available-items" style="display: none;">
+        <h2>Available Items</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in items %}
+                <tr>
+                    <td>{{ item.item_name }}</td>
+                    <td>{{ item.price }}</td>
+                    <td>{{ item.quantity }}</td>
+                    <td>
+                        <form method="POST" action="{% url 'dashboard' %}">
+                            {% csrf_token %}
+                            <input type="hidden" name="delete_item_id" value="{{ item.id }}">
+                            <button type="submit">Delete Item</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <a href="{% url 'add_item' %}">Add Item</a>
+    </div>
+
+    <!-- Button to toggle distributors -->
+    <button id="distributors-button">Distributors</button>
+
+    <!-- Distributors section (initially hidden) -->
+    <div id="distributors" style="display: none;">
+        <h2>Distributors list</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Area</th>
+                    <th>Phone number</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for distributor in distributors %}
+                <tr>
+                    <td>{{ distributor.name }}</td>
+                    <td>{{ distributor.area }}</td>
+                    <td>{{ distributor.phonenumber }}</td>
+                    <td>
+                        <form method="POST" action="{% url 'dashboard' %}">
+                            {% csrf_token %}
+                            <input type="hidden" name="delete_distributor_id" value="{{ distributor.id }}">
+                            <button type="submit">Delete distributor</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <a href="{% url 'add_distributor' %}">Add distributor</a>
+    </div>
+
+    <!-- Button to toggle orders -->
+    
+    <button id="orders-button">Orders</button>
+    <!-- Orders section (initially hidden) -->
+    <div id="orders" style="display: none;">
+        <h2>Orders</h2>
+        <table>
+            <thead>
+                <tr>
+                    {% comment %} <th>Order ID</th> {% endcomment %}
+                    <th>Item Name</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for order in orders %}
+                <tr>
+                    {% comment %} <td>{{ order.order_id }}</td> {% endcomment %}
+                    <td>{{ order.item_name }}</td>
+                    <td>{{ order.quantity }}</td>
+                    <td>{{ order.price }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <a href="{% url 'add_orders' %}">Add Orders</a>
+    </div>
+    <button id="fetch_details-button">Fetch Orders</button>
+    <!-- Orders section (initially hidden) -->
+    <div id="fetch_orders" style="display: none;">
+        
+                {% for requirement  in requirements %}
+                <tr>
+                    {% comment %} <td>{{ order.order_id }}</td> {% endcomment %}
+                    <td>{{ requirement.item_name }}</td>
+                    <td>{{ requirement.quantity }}</td>
+                    <td>{{ requirement.price }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <a href="{% url 'fetch_details' %}">Fetch Orders</a>
+    
+</div>
+{% comment %} <div class="logo">
+    <img src="/static/images/venki.jpg" alt="Logo">
+</div> {% endcomment %}
+    <!-- Include jQuery for handling click event -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            $('#availability-button').click(function() {
+                $('#available-items').toggle();
+                $('#distributors').hide(); // Hide the distributors section if it's currently open
+                $('#orders').hide(); // Hide the orders section if it's currently open
+            });
+
+            $('#distributors-button').click(function() {
+                $('#distributors').toggle();
+                $('#available-items').hide(); // Hide the available items section if it's currently open
+                $('#orders').hide(); // Hide the orders section if it's currently open
+            });
+
+            $('#orders-button').click(function() {
+                $('#orders').toggle();
+                $('#available-items').hide(); // Hide the available items section if it's currently open
+                $('#distributors').hide(); // Hide the distributors section if it's currently open
+            });
+            $('#fetch_details-button').click(function() {
+                $('#fetch_orders').toggle();
+                $('#available-items').hide(); // Hide the available items section if it's currently open
+                $('#orders').hide(); // Hide the orders section if it's currently open
+            });
+            
+        });
+    </script>
+</body>
+
+</html>

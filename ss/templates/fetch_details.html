@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title> your orders</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-image:url('/static/images/image4.jpg');
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .container {
+            max-width: 785px;
+            margin: 128px auto;
+            padding: 44px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            overflow-x: auto;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        table th, table td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        table th {
+            background-color: #f4f4f4;
+            font-weight: bold;
+        }
+        
+        table tbody tr:hover {
+            background-color: #f9f9f9;
+        }
+        
+        @media (max-width: 600px) {
+            table th, table td {
+                padding: 8px 10px;
+            }
+        }
+        .logo {
+            position: fixed;
+            top: -1px;
+            right: -2px;
+            z-index: 999; /* Ensure the logo appears above other content */
+        }
+        
+        .logo img {
+            width: 300px; /* Adjust the width of the logo as needed */
+            height: auto; /* Maintain aspect ratio */
+        }
+        
+    </style>
+</head>
+<body>
+    <div class="container">
+<table>
+    <thead>
+        <tr>
+            <th>Item Name</th>
+            <th>Quantity</th>
+            <th>Price</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for requirement in requirements %}
+        <tr>
+            <td>{{ requirement.item_name }}</td>
+            <td>{{ requirement.quantity }}</td>
+            <td>{{ requirement.price }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+</div>
+<div class="logo">
+    <img src="/static/images/image1.jpg" alt="Logo">
+</div>
+
+</body>
+</html>
