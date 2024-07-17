@@ -5,6 +5,7 @@ from django.contrib.auth import authenticate,login
 from django.contrib.auth.decorators import login_required
 from distributor.models import Requirements
 from .utils import *
+from .models import Items
 
 
 def home(request):
@@ -37,7 +38,7 @@ def register(request):
         user.save()
         profile = Stockist.objects.create(user=user,phonenumber = phonenumber,address = address)
         profile.save()
-        return redirect('login')
+        return redirect('login_view')
     return render(request,"register.html")
 
 def login_view(request):
@@ -141,4 +142,23 @@ def add_orders(request):
 def fetch_details(request):
     requirements = Requirements.objects.all()
     return render(request,'fetch_details.html',{'requirements':requirements})
+def edit_item(request, item_id):
+    item = get_object_or_404(Items, pk=item_id)
+    if request.method == 'POST':
+        item_name = request.POST.get('item_name')
+        quantity = request.POST.get('quantity')
+        price = request.POST.get('price')
+        is_available = request.POST.get('is_available') == 'on'
+        is_new = request.POST.get('is_new') == 'on'
+        
+        item.item_name = item_name
+        item.quantity = quantity
+        item.price = price
+        item.is_available = is_available
+        item.is_new = is_new
+        item.save()
+        
+        messages.success(request, "Item updated successfully")
+        return redirect('dashboard')
+    return render(request, 'edit_item.html', {'item': item})
     

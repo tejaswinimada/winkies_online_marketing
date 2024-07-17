@@ -10,26 +10,25 @@
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background-image:url('/static/images/image4.jpg');
+            background-image: url('/static/images/image10.jpg');
             background-size: cover;
             background-position: center;
-           
         }
         
         .container {
-            max-width: 800px;
+            max-width: 100px;
             margin: 0 auto;
             padding: 20px;
             background-color: #fff;
-            border-radius: 5px;
+            border-radius: 100px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
         
         header {
             text-align: center;
             padding: 10px 0;
-            background-color: #333;
-            color: white;
+            background-color: white;
+            color: black ;
             border-radius: 5px 5px 0 0;
         }
         
@@ -62,7 +61,7 @@
             padding: 10px;
             margin-bottom: 10px;
             border: none;
-            background-color: #4CAF50;
+            background-color: white;
             color: white;
             cursor: pointer;
             border-radius: 5px;
@@ -92,18 +91,55 @@
         table tbody tr:hover {
             background-color: #f9f9f9;
         }
-        {% comment %} .logo {
-            position: absolute;
-            top: 97px;
-            right: -2px;
-            z-index: 999;
-            /* Ensure the logo appears above other content */
+        
+        .delete-btn, .edit-btn {
+            display: inline-block;
+            padding: 10px 15px;
+            margin-right: 10px;
+            margin-bottom: 10px;
+            border: none;
+            color: white;
+            cursor: pointer;
+            border-radius: 5px;
+            text-decoration: none;
+            text-align: center;
         }
         
-        .logo img {
-            width: 300px; /* Adjust the width of the logo as needed */
-            height: auto; /* Maintain aspect ratio */
-        } {% endcomment %}
+        .delete-btn {
+            background-color: #f44336;
+        }
+        
+        .delete-btn:hover {
+            background-color: #e53935;
+        }
+        
+        .edit-btn {
+            background-color: red;
+        }
+        
+        .edit-btn:hover {
+            background-color: #1e88e5;
+        }
+        
+        .add-btn {
+            display: inline-block;
+            padding: 10px 15px;
+            margin-right: 10px;
+            margin-bottom: 10px;
+            border: none;
+            color: white;
+            cursor: pointer;
+            border-radius: 5px;
+            text-decoration: none;
+            text-align: center;
+        }
+        .add-btn {
+            background-color: #f44336;
+        }
+        
+        .add-btn:hover {
+            background-color: #e53935;
+        }
     
         a.logout-link {
             display: inline-block;
@@ -124,6 +160,25 @@
             background-color: #ac2925; /* Even darker red when clicked */
         }
          
+        .fetch-btn{
+            display: inline-block;
+            padding: 10px 15px;
+            margin-right: 10px;
+            margin-bottom: 10px;
+            border: none;
+            color: white;
+            cursor: pointer;
+            border-radius: 5px;
+            text-decoration: none;
+            text-align: center;
+        }
+        .fetch-btn {
+            background-color: #f44336;
+        }
+        
+        .fetch-btn:hover {
+            background-color: #e53935;
+        }
         
        
     </style>
@@ -171,14 +226,18 @@
                         <form method="POST" action="{% url 'dashboard' %}">
                             {% csrf_token %}
                             <input type="hidden" name="delete_item_id" value="{{ item.id }}">
-                            <button type="submit">Delete Item</button>
+                            <button type="submit" class="delete-btn">Delete Item</button>
                         </form>
+                      
+                        <a href="{% url 'edit_item' item.id %}"class="edit-btn">Edit Item</a>
+                        
+
                     </td>
                 </tr>
                 {% endfor %}
             </tbody>
         </table>
-        <a href="{% url 'add_item' %}">Add Item</a>
+        <a href="{% url 'add_item' %}" class="add-btn">Add Item</a>
     </div>
 
     <!-- Button to toggle distributors -->
@@ -258,7 +317,7 @@
                 {% endfor %}
             </tbody>
         </table>
-        <a href="{% url 'fetch_details' %}">Fetch Orders</a>
+        <a href="{% url 'fetch_details' %}" class="fetch-btn">Fetch Orders</a>
     
 </div>
 {% comment %} <div class="logo">

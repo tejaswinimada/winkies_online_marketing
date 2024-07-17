@@ -9,29 +9,33 @@ from django.contrib.auth.hashers import make_password
 
 def index(request):
     return render(request,"index.html")
+
 def registration(request):
-    if request.method  == "POST":
+ if request.method == "POST":
         username = request.POST.get("username")
-        password= request.POST.get("password")
-        email= request.POST.get("email")
-        print(username,password,email)
+        password = request.POST.get("password")
+        email = request.POST.get("email")
+        
         if Admin.objects.filter(username=username).exists():
             messages.error(request, "Username already exists")
             return redirect("registration")
+        
         if Admin.objects.filter(email=email).exists():
             messages.error(request, "Email already exists")
             return redirect("registration")
-        print(username,password,email)
+        
         hashed_password = make_password(password)
         user = Admin.objects.create(
-        username = username,
-        email = email,
-        password = hashed_password 
+            username=username,
+            email=email,
+            password=hashed_password 
         )
-        user.save()
-        return redirect('login1')
-    return render(request,"registration.html")
+        # No need to call user.save() after create() for saving the instance
 
+        # Redirect to login page after successful registration
+        return redirect('login1')
+    
+ return render(request, "registration.html")
 def login1(request):
     if request.method == "POST":
         username = request.POST.get('username')
@@ -48,7 +52,7 @@ def login1(request):
             messages.error(request,"invalid username or password")
             return redirect('login1')
     return render(request,'login1.html')
-
+    
 
 
 @login_required

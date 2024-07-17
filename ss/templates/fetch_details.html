@@ -69,6 +69,7 @@
             <th>Item Name</th>
             <th>Quantity</th>
             <th>Price</th>
+            
         </tr>
     </thead>
     <tbody>
@@ -77,6 +78,11 @@
             <td>{{ requirement.item_name }}</td>
             <td>{{ requirement.quantity }}</td>
             <td>{{ requirement.price }}</td>
+
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="4">No requirements found.</td>
         </tr>
         {% endfor %}
     </tbody>

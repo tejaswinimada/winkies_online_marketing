@@ -12,7 +12,7 @@ urlpatterns = [
     path("logout/",views.logout,name="logout"),
     path('add_orders/',views.add_orders,name="add_orders"),
     path('fetch_details/',views.fetch_details,name="fetch_details"),
-   
+    path('edit-item/<int:item_id>/', views.edit_item, name='edit_item'),
 
     
 
